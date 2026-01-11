@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block title %}Login{% endblock %}
+
+{% block content %}
+<div class="login-wrapper">
+
+    <div class="login-card">
+
+        <!-- Left Side (Image / Branding) -->
+        <div class="login-left">
+            <h2>Welcome Back 👋</h2>
+            <p>Manage your tasks, track progress, and stay productive.</p>
+        </div>
+
+        <!-- Right Side (Form) -->
+        <div class="login-right">
+            <h3>Login to your account</h3>
+
+            <form method="POST" action="{{ url_for('auth.login') }}">
+                
+                <div class="form-group">
+                    <label>Username</label>
+                    <input type="text" name="username" placeholder="Enter your username" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" name="password" placeholder="Enter your password" required>
+                </div>
+
+                <button type="submit" class="btn-login">Login</button>
+            </form>
+
+            <p class="register-link">
+                Don’t have an account?
+                <a href="{{ url_for('auth.register') }}">Create one</a>
+            </p>
+        </div>
+
+    </div>
+
+</div>
+{% endblock %}

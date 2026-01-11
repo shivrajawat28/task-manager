@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% block title %}My Tasks{% endblock %}
+
+{% block content %}
+
+<div class="task-container">
+
+    <h2>📋 My Tasks</h2>
+
+    <!-- Progress Section -->
+    <div class="progress-box">
+        <div class="progress-label">Progress: {{ progress }}%</div>
+        <div class="progress-bar-bg">
+            <div class="progress-bar-fill" data-progress="{{ progress }}"></div>
+        </div>
+    </div>
+
+    <!-- Add Task -->
+    <form class="add-task-form" method="POST" action="{{ url_for('tasks.add_task') }}">
+        <input type="text" name="title" id="taskInput" placeholder="Enter new task..." required>
+        <button type="submit">➕ Add</button>
+    </form>
+
+    <!-- Task List -->
+    <div class="task-list">
+
+        {% for task in tasks %}
+        <div class="task-card {{ task.status|lower }}">
+            <div>
+                <strong>{{ task.title }}</strong>
+                <small>Status: {{ task.status }}</small>
+            </div>
+
+            <div class="task-actions">
+
+                <!-- Toggle -->
+                <form method="POST" action="{{ url_for('tasks.toggle_status', task_id=task.id) }}">
+                    <button type="submit">🔄</button>
+                </form>
+
+
+                <!-- Delete -->
+                <form method="POST" action="{{ url_for('tasks.delete_task', task_id=task.id) }}" class="delete-form">
+                    <button type="submit">🗑️</button>
+                </form>
+
+            </div>
+        </div>
+        {% else %}
+        <p class="no-task">No tasks yet. Add one 👆</p>
+        {% endfor %}
+
+    </div>
+
+    <!-- Clear All -->
+    {% if tasks %}
+    <form method="POST" action="{{ url_for('tasks.clear_tasks') }}">
+        <button class="clear-btn">🧹 Clear All Tasks</button>
+    </form>
+    {% endif %}
+
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/script.js') }}"></script>
+{% endblock %}
