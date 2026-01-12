@@ -29,7 +29,7 @@ def view_tasks():
         progress = int((completed_tasks / total_tasks) * 100)
     # ================================
 
-    return render_template("task.html", tasks=tasks)
+    return render_template("task.html", tasks=tasks, progress=progress)
 
 
 #add task route
@@ -49,7 +49,7 @@ def add_task():
     return redirect(url_for("tasks.view_tasks"))
 
 
-#status route
+#toggle route
 @task_bp.route("/toggle/<int:task_id>", methods=['POST'])
 def toggle_status(task_id):
     task = Task.query.get(task_id)
